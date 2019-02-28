@@ -6,7 +6,6 @@ require __DIR__.'/vendor/autoload.php';
 use Symfony\Component\Console\Application;
 use Game\BattlingCommand;
 
-
 $application = new Application();
 
 $application->addCommands([

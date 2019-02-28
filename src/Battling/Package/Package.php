@@ -1,6 +1,6 @@
 <?php
 
-namespace Game\Battling;
+namespace Game\Battling\Package;
 
 use Game\Battling\Card\CardInterface;
 use Game\Battling\Card\ClassicCard;

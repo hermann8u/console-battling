@@ -19,6 +19,11 @@ class Player
     private $cards;
 
     /**
+     * @var CardInterface
+     */
+    private $currentCard;
+
+    /**
      * @var int
      */
     private $score;
@@ -58,6 +63,11 @@ class Player
         $this->cards[] = $card;
     }
 
+    public function getCurrentCard(): ?CardInterface
+    {
+        return $this->currentCard;
+    }
+
     public function getScore(): int
     {
         return $this->score;
@@ -70,7 +80,7 @@ class Player
 
     public function drawCard(): ?CardInterface
     {
-        return array_shift($this->cards);
+        return $this->currentCard = array_shift($this->cards);
     }
 
     public function hasCards(): bool
