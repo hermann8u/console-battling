@@ -32,7 +32,7 @@ You can run this project with the following steps :
 - Clone or download the code
 - Open a console and go the root directory of this project
 - Install the dependencies with composer
-- Execute it with "php run" command. Use the --help option for configuration
+- Execute it with "php run" command. Use the --help option to see available configuration
 
 ## What's next
 
