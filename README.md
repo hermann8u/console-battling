@@ -24,7 +24,7 @@ Today the project totally changed. We implement this functionality :
 - A representation of a real 52 cards package
 - The real game in its full design. The game finish when one of the two player has all the cards
 - A war is declared when the drawn cards have the same value
-- Different options of configuration (sleep between round, package type, discard or win the cards from the round).
+- Different options of configuration (sleep between round, package type, discard or win the cards from the round, light console background)
 
 ## How to run it
 

@@ -36,6 +36,7 @@ class WarCommand extends Command
             ->addOption('number', null, InputOption::VALUE_NONE, 'Change the type of package to numeric (1 to 52)')
             ->addOption('discard', 'd', InputOption::VALUE_NONE, 'Discard the card after played')
             ->addOption('no-sleep', 's', InputOption::VALUE_NONE, 'Remove the sleep')
+            ->addOption('light-mode', 'l', InputOption::VALUE_NONE, 'Indicate that your console has a light background')
         ;
     }
 
@@ -52,10 +53,10 @@ class WarCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $context = new ConsoleContext($this->io);
+        $context = new ConsoleContext($this->io, $input->getOption('light-mode'));
         $game = new Game($context, $this->playerOneName, $this->playerTwoName, [
-            'discard' => (bool) $input->getOption('discard'),
-            'sleep' => (bool) !$input->getOption('no-sleep'),
+            'discard' => $input->getOption('discard'),
+            'sleep' => !$input->getOption('no-sleep'),
             'packageType' => $input->getOption('number') ? 'number' : 'classic'
         ]);
 

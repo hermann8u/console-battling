@@ -20,7 +20,28 @@ class ClassicCard implements CardInterface
         'As' => 14
     ];
 
-    const FAMILIES = ['♥', '♦', '♠', '♣'];
+    const FAMILIES = [
+        'heart' => [
+            'name' => 'Heart',
+            'symbol' => '♥',
+            'color' => 'red'
+        ],
+        'tiles' => [
+            'name' => 'Tiles',
+            'symbol' => '♦',
+            'color' => 'red'
+        ],
+        'spades' => [
+            'name' => 'Spades',
+            'symbol' => '♠',
+            'color' => 'black'
+        ],
+        'clover' => [
+            'name' => 'Clover',
+            'symbol' => '♣',
+            'color' => 'black'
+        ],
+    ];
 
     /**
      * @var string
@@ -28,20 +49,30 @@ class ClassicCard implements CardInterface
     private $name;
 
     /**
-     * @var string
+     * @var array
      */
     private $family;
 
     public function __construct(string $name, string $family)
     {
         $this->setName($name);
-        $this->setFamily($family);
+        $this->setFamilyByName($family);
+    }
+
+    public static function getFamiliesName(): array
+    {
+        return array_keys(self::FAMILIES);
     }
 
     public function __toString(): string
     {
-        return '<fg='.$this->getColor().'>'.$this->family.' '.$this->name.'</>';
+        return $this->family['symbol'].' '.$this->name.' ';
     }
+
+    /*public function __toString(): string
+    {
+        return '<fg='.$this->getColor().'>'.$this->family.' '.$this->name.'</>';
+    }*/
 
     public function getName(): string
     {
@@ -66,7 +97,7 @@ class ClassicCard implements CardInterface
         return $this;
     }
 
-    public function getFamily()
+    public function getFamily(): array
     {
         return $this->family;
     }
@@ -78,13 +109,13 @@ class ClassicCard implements CardInterface
      *
      * @return ClassicCard
      */
-    private function setFamily(string $family): self
+    private function setFamilyByName(string $family): self
     {
-        if (!in_array($family,self::FAMILIES)) {
+        if (!in_array($family, self::getFamiliesName())) {
             throw new \InvalidArgumentException();
         }
 
-        $this->family = $family;
+        $this->family = self::FAMILIES[$family];
 
         return $this;
     }
@@ -94,8 +125,8 @@ class ClassicCard implements CardInterface
         return self::CARDS_MAP[$this->name];
     }
 
-    public function getColor(): string
+    public function getColor(): ?string
     {
-        return in_array($this->family, ['♥', '♦']) ? 'red' : 'white';
+        return $this->family['color'];
     }
 }

@@ -23,4 +23,9 @@ class NumberCard implements CardInterface
     {
         return $this->value;
     }
+
+    public function getColor(): ?string
+    {
+        return null;
+    }
 }

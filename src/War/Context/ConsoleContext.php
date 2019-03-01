@@ -2,6 +2,7 @@
 
 namespace Game\War\Context;
 
+use Game\War\Card\CardInterface;
 use Game\War\Player;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -22,9 +23,15 @@ class ConsoleContext implements ContextInterface
      */
     private $playerTwo;
 
-    public function __construct(SymfonyStyle $io)
+    /**
+     * @var bool Indicate that the console has a light background
+     */
+    private $lightMode;
+
+    public function __construct(SymfonyStyle $io, bool $lightMode)
     {
         $this->io = $io;
+        $this->lightMode = $lightMode;
     }
 
     public function setPlayers(Player $playerOne, Player $playerTwo): ContextInterface
@@ -52,8 +59,8 @@ class ConsoleContext implements ContextInterface
             'Carte',
             'Cartes restantes',
         ], [
-            [$this->playerOne->getName(), $this->playerOne->getCurrentCard(), count($this->playerOne->getCards())],
-            [$this->playerTwo->getName(), $this->playerTwo->getCurrentCard(), count($this->playerTwo->getCards())]
+            [$this->playerOne->getName(), $this->formatCard($this->playerOne->getCurrentCard()), count($this->playerOne->getCards())],
+            [$this->playerTwo->getName(), $this->formatCard($this->playerTwo->getCurrentCard()), count($this->playerTwo->getCards())]
         ]);
     }
 
@@ -65,5 +72,20 @@ class ConsoleContext implements ContextInterface
     public function finishGame(?Player $winner)
     {
         $this->io->success($winner ? $winner->getName().' gagne la partie avec '.$winner->getScore().' points !' : 'C\'est une égalité !');
+    }
+
+    private function formatCard(CardInterface $card)
+    {
+        $result = (string) $card;
+
+        if ($color = $card->getColor()) {
+            if ($this->lightMode && $color === 'black') {
+                $color = 'white';
+            }
+
+            $result = '<fg='.$color.'>'.$result.'</>';
+        }
+
+        return $result;
     }
 }

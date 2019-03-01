@@ -24,7 +24,7 @@ class Package
         }
 
         if ($type === 'classic') {
-            foreach (ClassicCard::FAMILIES as $family) {
+            foreach (ClassicCard::getFamiliesName() as $family) {
                 foreach (ClassicCard::CARDS_MAP as $name => $value) {
                     $this->cards[] = new ClassicCard($name, $family);
                 }
