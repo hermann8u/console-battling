@@ -31,13 +31,13 @@ Today the project totally changed. We implement this functionality :
 You can run this project with the following steps :
 - Clone or download the code
 - Open a console and go the root directory of this project
-- Install the dependencies with composer
-- Execute it with "php run" command. Use the --help option to see available configuration
+- Install the dependencies with Composer
+- Execute it with **php run** command. Use the **--help** option to see available configuration
 
 ## What's next
 
 You can see here a list of the possible evolutions of this project :
-- Adding translations (at least in english for the game messages)
-- Factory pattern design for Package creation
-- Observer or Mediator pattern design? (instead of the current ContextInterface)
-- Brings it to the browser with Web sockets
+- Adding **translations** for the game messages (at least in english)
+- **Factory** pattern design for Package creation
+- **Observer** or **Mediator** pattern design? (instead of the current ContextInterface)
+- Brings it to the browser with **Web sockets**
