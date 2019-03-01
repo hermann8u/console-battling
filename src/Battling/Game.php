@@ -91,7 +91,7 @@ class Game
         $this->cardsForWinner[] = $this->playerOne->drawCard();
         $this->cardsForWinner[] = $this->playerTwo->drawCard();
 
-        $this->context->afterPlayersDraw($this->playerOne, $this->playerTwo);
+        $this->context->afterPlayersDraw();
 
         if ($this->playerOne->getCurrentCard()->getValue() === $this->playerTwo->getCurrentCard()->getValue()) {
             $this->equality();
@@ -99,7 +99,7 @@ class Game
             $winner = $this->winner();
         }
 
-        $this->context->finishRound($winner, $this->playerOne, $this->playerTwo);
+        $this->context->finishRound($winner);
     }
 
     private function equality()
