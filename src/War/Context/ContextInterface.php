@@ -1,8 +1,8 @@
 <?php
 
-namespace Game\Battling\Context;
+namespace Game\War\Context;
 
-use Game\Battling\Player;
+use Game\War\Player;
 
 interface ContextInterface
 {

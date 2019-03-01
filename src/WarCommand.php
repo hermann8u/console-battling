@@ -2,17 +2,17 @@
 
 namespace Game;
 
-use Game\Battling\Context\ConsoleContext;
-use Game\Battling\Game;
+use Game\War\Context\ConsoleContext;
+use Game\War\Game;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputOption;
 
-class BattlingCommand extends Command
+class WarCommand extends Command
 {
-    protected static $defaultName = 'battling';
+    protected static $defaultName = 'war';
 
     /**
      * @var SymfonyStyle
@@ -32,7 +32,7 @@ class BattlingCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('This command launch a Battling game between two players')
+            ->setDescription('This command launch a War game between two players')
             ->addOption('number', null, InputOption::VALUE_NONE, 'Change the type of package to numeric (1 to 52)')
             ->addOption('discard', 'd', InputOption::VALUE_NONE, 'Discard the card after played')
             ->addOption('no-sleep', 's', InputOption::VALUE_NONE, 'Remove the sleep')

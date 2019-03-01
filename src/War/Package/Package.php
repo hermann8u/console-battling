@@ -1,10 +1,10 @@
 <?php
 
-namespace Game\Battling\Package;
+namespace Game\War\Package;
 
-use Game\Battling\Card\CardInterface;
-use Game\Battling\Card\ClassicCard;
-use Game\Battling\Card\NumberCard;
+use Game\War\Card\CardInterface;
+use Game\War\Card\ClassicCard;
+use Game\War\Card\NumberCard;
 
 class Package
 {

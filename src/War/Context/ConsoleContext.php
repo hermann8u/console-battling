@@ -1,8 +1,8 @@
 <?php
 
-namespace Game\Battling\Context;
+namespace Game\War\Context;
 
-use Game\Battling\Player;
+use Game\War\Player;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConsoleContext implements ContextInterface

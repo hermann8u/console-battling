@@ -4,12 +4,12 @@
 require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use Game\BattlingCommand;
+use Game\WarCommand;
 
-$application = new Application();
+$application = (new Application())->setDefaultCommand('war', true);
 
 $application->addCommands([
-    new BattlingCommand()
+    new WarCommand()
 ]);
 
 $application->run();

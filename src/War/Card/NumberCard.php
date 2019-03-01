@@ -1,6 +1,6 @@
 <?php
 
-namespace Game\Battling\Card;
+namespace Game\War\Card;
 
 class NumberCard implements CardInterface
 {
