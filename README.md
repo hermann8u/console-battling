@@ -3,7 +3,7 @@
 A war card game written in PHP
 
 > You can show this as an exercise or a toy project.
-> Its goal is to have a functional game, to implement designs patterns and separation of concerns and to follow best practices.
+> Its goals is to have a functional game, to implement designs patterns and separation of concerns and to follow best practices.
 
 ## Story behind this project
 
@@ -37,6 +37,7 @@ You can run this project with the following steps :
 ## What's next
 
 You can see here a list of the possible evolutions of this project :
+- Adding translations (at least in english for the game messages)
 - Factory pattern design for Package creation
 - Observer or Mediator pattern design? (instead of the current ContextInterface)
 - Brings it to the browser with Web sockets
