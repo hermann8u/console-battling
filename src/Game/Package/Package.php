@@ -1,10 +1,10 @@
 <?php
 
-namespace Game\War\Package;
+namespace WarCardGame\Game\Package;
 
-use Game\War\Card\CardInterface;
-use Game\War\Card\ClassicCard;
-use Game\War\Card\NumberCard;
+use WarCardGame\Game\Card\CardInterface;
+use WarCardGame\Game\Card\ClassicCard;
+use WarCardGame\Game\Card\NumberCard;
 
 class Package
 {

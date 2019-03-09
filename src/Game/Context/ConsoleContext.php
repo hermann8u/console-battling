@@ -1,9 +1,9 @@
 <?php
 
-namespace Game\War\Context;
+namespace WarCardGame\Game\Context;
 
-use Game\War\Card\CardInterface;
-use Game\War\Player;
+use WarCardGame\Game\Card\CardInterface;
+use WarCardGame\Game\Player;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConsoleContext implements ContextInterface

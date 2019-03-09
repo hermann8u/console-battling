@@ -1,9 +1,9 @@
 <?php
 
-namespace Game;
+namespace WarCardGame;
 
-use Game\War\Context\ConsoleContext;
-use Game\War\Game;
+use WarCardGame\Game\Context\ConsoleContext;
+use WarCardGame\Game\Game;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,7 +32,7 @@ class WarCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('This command launch a War game between two players')
+            ->setDescription('This command launch a Game game between two players')
             ->addOption('number', null, InputOption::VALUE_NONE, 'Change the type of package to numeric (1 to 52)')
             ->addOption('discard', 'd', InputOption::VALUE_NONE, 'Discard the card after played')
             ->addOption('no-sleep', 's', InputOption::VALUE_NONE, 'Remove the sleep')

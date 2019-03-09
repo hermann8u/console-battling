@@ -1,10 +1,10 @@
 <?php
 
-namespace Game\War;
+namespace WarCardGame\Game;
 
-use Game\War\Card\CardInterface;
-use Game\War\Context\ContextInterface;
-use Game\War\Package\Package;
+use WarCardGame\Game\Card\CardInterface;
+use WarCardGame\Game\Context\ContextInterface;
+use WarCardGame\Game\Package\Package;
 
 class Game
 {

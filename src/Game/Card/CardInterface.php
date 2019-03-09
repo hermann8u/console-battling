@@ -1,6 +1,6 @@
 <?php
 
-namespace Game\War\Card;
+namespace WarCardGame\Game\Card;
 
 interface CardInterface
 {

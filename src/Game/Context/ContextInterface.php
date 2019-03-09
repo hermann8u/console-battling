@@ -1,8 +1,8 @@
 <?php
 
-namespace Game\War\Context;
+namespace WarCardGame\Game\Context;
 
-use Game\War\Player;
+use WarCardGame\Game\Player;
 
 interface ContextInterface
 {

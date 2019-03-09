@@ -1,8 +1,8 @@
 <?php
 
-namespace Game\War;
+namespace WarCardGame\Game;
 
-use Game\War\Card\CardInterface;
+use WarCardGame\Game\Card\CardInterface;
 
 class Player
 {
