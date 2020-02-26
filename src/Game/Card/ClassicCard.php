@@ -14,7 +14,7 @@ class ClassicCard implements Card
         '8' => 8,
         '9' => 9,
         '10' => 10,
-        'V' => 11,
+        'J' => 11,
         'Q' => 12,
         'K' => 13,
         'A' => 14,
