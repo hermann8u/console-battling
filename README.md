@@ -2,8 +2,8 @@
 
 A war card game written in PHP
 
-> You can show this as an exercise or a toy project.
-> Its goals is to have a functional game, to implement designs patterns and separation of concerns and to follow best practices.
+> You can see this as an exercise or a toy project.
+> The goals are to have a functional game, to implement design patterns and separation of concerns and to follow best practices.
 
 ## Story behind this project
 
