@@ -62,7 +62,7 @@ class Game
             $roundCount++;
 
             if ($this->config['sleep']) {
-                sleep(1);
+                sleep(2);
             }
         }
 
