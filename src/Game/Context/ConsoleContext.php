@@ -17,13 +17,13 @@ class ConsoleContext implements Context
     /** @var Player */
     private $playerTwo;
 
-    /** @var bool Indicate that the console has a light background */
-    private $lightMode;
+    /** @var bool Indicate that the console has a dark background */
+    private $darkMode;
 
     public function __construct(StyleInterface $io, bool $lightMode)
     {
         $this->io = $io;
-        $this->lightMode = $lightMode;
+        $this->darkMode = $lightMode;
     }
 
     public function setPlayers(Player $playerOne, Player $playerTwo): void
@@ -69,7 +69,7 @@ class ConsoleContext implements Context
         $result = (string) $card;
 
         if ($color = $card->getColor()) {
-            if ($this->lightMode && $color === 'black') {
+            if ($this->darkMode && $color === 'black') {
                 $color = 'white';
             }
 

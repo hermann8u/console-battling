@@ -30,7 +30,7 @@ class WarCommand extends Command
             ->setDescription('This command launch a Game game between two players')
             ->addOption('numeric', null, InputOption::VALUE_NONE, 'Change the type of package to numeric (1 to 52)')
             ->addOption('no-sleep', 's', InputOption::VALUE_NONE, 'Remove the sleep')
-            ->addOption('light-mode', 'l', InputOption::VALUE_NONE, 'Indicate that your console has a light background')
+            ->addOption('dark-mode', 'd', InputOption::VALUE_NONE, 'Indicate that your console has a light background')
         ;
     }
 
@@ -47,7 +47,7 @@ class WarCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $context = new ConsoleContext($this->io, $input->getOption('light-mode'));
+        $context = new ConsoleContext($this->io, $input->getOption('dark-mode'));
         $game = new Game($context, $this->playerOneName, $this->playerTwoName, [
             'sleep' => !$input->getOption('no-sleep'),
             'packageType' => $input->getOption('numeric') ? 'numeric' : 'classic'
