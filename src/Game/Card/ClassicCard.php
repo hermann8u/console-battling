@@ -101,17 +101,18 @@ class ClassicCard implements Card
     /**
      * This setter is private because we can't redefine the value later
      *
-     * @param string $family
+     * @param string $familyName
      *
      * @return ClassicCard
      */
-    private function setFamilyByName(string $family): self
+    private function setFamilyByName(string $familyName): self
     {
-        if (!in_array($family, self::getFamiliesName())) {
+        $family = self::FAMILIES[$familyName] ?? null;
+        if (null === $family) {
             throw new \InvalidArgumentException();
         }
 
-        $this->family = self::FAMILIES[$family];
+        $this->family = $family;
 
         return $this;
     }
