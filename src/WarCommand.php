@@ -27,8 +27,8 @@ class WarCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('This command launch a Game game between two players')
-            ->addOption('numeric', null, InputOption::VALUE_NONE, 'Change the type of package to numeric (1 to 52)')
+            ->setDescription('This command launch a game')
+            ->addOption('numeric', null, InputOption::VALUE_NONE, 'Change the type of package to numeric')
             ->addOption('no-sleep', 's', InputOption::VALUE_NONE, 'Remove the sleep')
             ->addOption('dark-mode', 'd', InputOption::VALUE_NONE, 'Indicate that your console has a light background')
         ;
