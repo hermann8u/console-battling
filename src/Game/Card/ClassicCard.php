@@ -2,7 +2,7 @@
 
 namespace WarCardGame\Game\Card;
 
-class ClassicCard implements CardInterface
+class ClassicCard implements Card
 {
     const CARDS_MAP = [
         '2' => 2,
@@ -14,49 +14,45 @@ class ClassicCard implements CardInterface
         '8' => 8,
         '9' => 9,
         '10' => 10,
-        'Valet' => 11,
-        'Dame' => 12,
-        'Roi' => 13,
-        'As' => 14
+        'V' => 11,
+        'Q' => 12,
+        'K' => 13,
+        'A' => 14,
     ];
 
     const FAMILIES = [
         'heart' => [
             'name' => 'Heart',
             'symbol' => '♥',
-            'color' => 'red'
+            'color' => 'red',
         ],
         'tiles' => [
             'name' => 'Tiles',
             'symbol' => '♦',
-            'color' => 'red'
+            'color' => 'red',
         ],
         'spades' => [
             'name' => 'Spades',
             'symbol' => '♠',
-            'color' => 'black'
+            'color' => 'black',
         ],
         'clover' => [
             'name' => 'Clover',
             'symbol' => '♣',
-            'color' => 'black'
+            'color' => 'black',
         ],
     ];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $family;
 
-    public function __construct(string $name, string $family)
+    public function __construct(string $name, string $familyName)
     {
         $this->setName($name);
-        $this->setFamilyByName($family);
+        $this->setFamilyByName($familyName);
     }
 
     public static function getFamiliesName(): array
@@ -69,14 +65,19 @@ class ClassicCard implements CardInterface
         return $this->family['symbol'].' '.$this->name.' ';
     }
 
-    /*public function __toString(): string
-    {
-        return '<fg='.$this->getColor().'>'.$this->family.' '.$this->name.'</>';
-    }*/
-
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getValue(): int
+    {
+        return self::CARDS_MAP[$this->name];
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->family['color'];
     }
 
     /**
@@ -97,11 +98,6 @@ class ClassicCard implements CardInterface
         return $this;
     }
 
-    public function getFamily(): array
-    {
-        return $this->family;
-    }
-
     /**
      * This setter is private because we can't redefine the value later
      *
@@ -118,15 +114,5 @@ class ClassicCard implements CardInterface
         $this->family = self::FAMILIES[$family];
 
         return $this;
-    }
-
-    public function getValue(): int
-    {
-        return self::CARDS_MAP[$this->name];
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->family['color'];
     }
 }

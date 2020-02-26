@@ -2,11 +2,9 @@
 
 namespace WarCardGame\Game\Card;
 
-class NumberCard implements CardInterface
+class NumberCard implements Card
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $value;
 
     public function __construct(int $value)

@@ -2,79 +2,69 @@
 
 namespace WarCardGame\Game\Context;
 
-use WarCardGame\Game\Card\CardInterface;
+use Symfony\Component\Console\Style\StyleInterface;
+use WarCardGame\Game\Card\Card;
 use WarCardGame\Game\Player;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ConsoleContext implements ContextInterface
+class ConsoleContext implements Context
 {
-    /**
-     * @var SymfonyStyle
-     */
+    /** @var StyleInterface */
     private $io;
 
-    /**
-     * @var Player
-     */
+    /** @var Player */
     private $playerOne;
 
-    /**
-     * @var Player
-     */
+    /** @var Player */
     private $playerTwo;
 
-    /**
-     * @var bool Indicate that the console has a light background
-     */
+    /** @var bool Indicate that the console has a light background */
     private $lightMode;
 
-    public function __construct(SymfonyStyle $io, bool $lightMode)
+    public function __construct(StyleInterface $io, bool $lightMode)
     {
         $this->io = $io;
         $this->lightMode = $lightMode;
     }
 
-    public function setPlayers(Player $playerOne, Player $playerTwo): ContextInterface
+    public function setPlayers(Player $playerOne, Player $playerTwo): void
     {
         $this->playerOne = $playerOne;
         $this->playerTwo = $playerTwo;
-
-        return $this;
     }
 
-    public function launchGame()
+    public function launchGame(): void
     {
         $this->io->section('La partie commence !');
     }
 
-    public function launchRound(int $roundNumber)
+    public function launchRound(int $roundNumber): void
     {
         $this->io->section('Round '.$roundNumber);
     }
 
-    public function afterPlayersDraw()
+    public function afterPlayersDraw(): void
     {
         $this->io->table([
             'Joueur',
             'Carte',
             'Cartes restantes',
         ], [
-            [$this->playerOne->getName(), $this->formatCard($this->playerOne->getCurrentCard()), count($this->playerOne->getCards())],
-            [$this->playerTwo->getName(), $this->formatCard($this->playerTwo->getCurrentCard()), count($this->playerTwo->getCards())]
+            [$this->playerOne->getName(), $this->formatCard($this->playerOne->getCurrentCard()), $this->playerOne->getCardsCount()],
+            [$this->playerTwo->getName(), $this->formatCard($this->playerTwo->getCurrentCard()), $this->playerTwo->getCardsCount()]
         ]);
     }
 
-    public function finishRound(?Player $winner)
+    public function finishRound(?Player $winner): void
     {
         $this->io->comment($winner ? $winner->getName().' gagne le round' : 'Bataille !');
     }
 
-    public function finishGame(?Player $winner)
+    public function finishGame(?Player $winner, int $roundsCount): void
     {
-        $this->io->success($winner ? $winner->getName().' gagne la partie avec '.$winner->getScore().' points !' : 'C\'est une égalité !');
+        $this->io->success(($winner ? $winner->getName().' gagne la partie !' : 'C\'est une égalité !').' La partie a durée '.$roundsCount.' rounds.');
     }
 
-    private function formatCard(CardInterface $card)
+    private function formatCard(Card $card)
     {
         $result = (string) $card;
 

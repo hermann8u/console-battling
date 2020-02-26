@@ -2,54 +2,42 @@
 
 namespace WarCardGame\Game;
 
-use WarCardGame\Game\Card\CardInterface;
-use WarCardGame\Game\Context\ContextInterface;
+use WarCardGame\Game\Card\Card;
+use WarCardGame\Game\Context\Context;
 use WarCardGame\Game\Package\Package;
 
 class Game
 {
-    /**
-     * @var ContextInterface
-     */
+    /** @var Context */
     private $context;
 
-    /**
-     * @var Player
-     */
+    /** @var Player */
     private $playerOne;
 
-    /**
-     * @var Player
-     */
+    /** @var Player */
     private $playerTwo;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $config;
 
-    /**
-     * @var CardInterface[]
-     */
+    /** @var Card[] */
     private $cardsForWinner;
 
-    public function __construct(ContextInterface $context, string $playerOneName, string $playerTwoName, array $config = [])
+    public function __construct(Context $context, string $playerOneName, string $playerTwoName, array $config = [])
     {
-        $this->playerOne = (new Player())->setName($playerOneName);
-        $this->playerTwo = (new Player())->setName($playerTwoName);
+        $this->playerOne = new Player($playerOneName);
+        $this->playerTwo = new Player($playerTwoName);
 
-        $this->context = $context->setPlayers($this->playerOne, $this->playerTwo);
+        $this->context = $context;
+        $this->context->setPlayers($this->playerOne, $this->playerTwo);
 
-        $defaultConfig = [
+        $this->config = $config + [
             'sleep' => true,
-            'discard' => false,
-            'packageType' => 'classic'
+            'packageType' => Package::TYPE_CLASSIC,
         ];
-
-        $this->config = array_merge($defaultConfig, $config);
     }
 
-    public function launch()
+    public function launch(): void
     {
         $this->context->launchGame();
 
@@ -66,74 +54,63 @@ class Game
             }
         }
 
-        if ($this->playerOne->getScore() === $this->playerTwo->getScore()) {
-            $winner = null;
-        } else {
-            $winner = $this->playerOne->getScore() > $this->playerTwo->getScore() ? $this->playerOne : $this->playerTwo;
-        }
+        $winner = $this->playerOne->getCardsCount() > $this->playerTwo->getCardsCount()
+            ? $this->playerOne
+            : $this->playerTwo;
 
-        $this->context->finishGame($winner);
+        $this->context->finishGame($winner, $roundCount);
     }
 
-    private function initPlayersCards(string $type)
+    private function initPlayersCards(string $type): void
     {
         $package = new Package($type);
-        $split = array_chunk($package->getCards(), count($package->getCards()) / 2);
+        $split = $package->splitIntoTwo();
 
-        $this->playerOne->setCards($split[0]);
-        $this->playerTwo->setCards($split[1]);
+        $this->playerOne->addCards(...$split[0]);
+        $this->playerTwo->addCards(...$split[1]);
     }
 
-    private function round()
+    private function round(): void
     {
-        $winner = null;
-
         $this->cardsForWinner[] = $this->playerOne->drawCard();
         $this->cardsForWinner[] = $this->playerTwo->drawCard();
 
         $this->context->afterPlayersDraw();
 
         if ($this->playerOne->getCurrentCard()->getValue() === $this->playerTwo->getCurrentCard()->getValue()) {
-            $this->equality();
+            $this->declareWar();
         } else {
             $winner = $this->winner();
         }
 
-        $this->context->finishRound($winner);
+        $this->context->finishRound($winner ?? null);
     }
 
-    private function equality()
+    private function declareWar(): void
     {
-        if (count($this->playerOne->getCards()) > 1 && count($this->playerTwo->getCards()) > 1) {
+        if ($this->playerOne->getCardsCount() > 1 && $this->playerTwo->getCardsCount() > 1) {
             $this->cardsForWinner[] = $this->playerOne->drawCard();
             $this->cardsForWinner[] = $this->playerTwo->drawCard();
         }
 
         if (!$this->playerOne->hasCards() || !$this->playerTwo->hasCards()) {
-            $this->playerOne->addCard($this->playerOne->getCurrentCard());
-            $this->playerTwo->addCard($this->playerTwo->getCurrentCard());
+            $this->playerOne->addCards($this->playerOne->getCurrentCard());
+            $this->playerTwo->addCards($this->playerTwo->getCurrentCard());
 
             $this->cardsForWinner = [];
         }
     }
 
-    private function winner()
+    private function winner(): Player
     {
-        $winner = $this->playerOne->getCurrentCard()->getValue() > $this->playerTwo->getCurrentCard()->getValue() ?
-            $this->playerOne :
-            $this->playerTwo;
-
-        $winner->incrementScore();
+        $winner = $this->playerOne->getCurrentCard()->getValue() > $this->playerTwo->getCurrentCard()->getValue()
+            ? $this->playerOne
+            : $this->playerTwo;
 
         // Add cards to winner package
-        if (!$this->config['discard']) {
-            shuffle($this->cardsForWinner);
-            foreach ($this->cardsForWinner as $card) {
-                $winner->addCard($card);
-            }
+        $winner->addCards(...$this->cardsForWinner);
 
-            $this->cardsForWinner = [];
-        }
+        $this->cardsForWinner = [];
 
         return $winner;
     }

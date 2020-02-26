@@ -2,20 +2,23 @@
 
 namespace WarCardGame\Game\Package;
 
-use WarCardGame\Game\Card\CardInterface;
+use WarCardGame\Game\Card\Card;
 use WarCardGame\Game\Card\ClassicCard;
 use WarCardGame\Game\Card\NumberCard;
 
 class Package
 {
-    const TYPES = ['classic', 'number'];
+    public const TYPE_CLASSIC = 'classic';
+    public const TYPE_NUMERIC = 'numeric';
+    public const TYPES = [
+        self::TYPE_CLASSIC,
+        self::TYPE_NUMERIC,
+    ];
 
-    /**
-     * @var CardInterface[]
-     */
+    /** @var Card[] */
     private $cards;
 
-    public function __construct($type = 'classic')
+    public function __construct(string $type = self::TYPE_CLASSIC)
     {
         $this->cards = [];
 
@@ -23,14 +26,17 @@ class Package
             throw new \InvalidArgumentException();
         }
 
-        if ($type === 'classic') {
+        if ($type === self::TYPE_CLASSIC) {
             foreach (ClassicCard::getFamiliesName() as $family) {
                 foreach (ClassicCard::CARDS_MAP as $name => $value) {
                     $this->cards[] = new ClassicCard($name, $family);
                 }
             }
-        } elseif ($type === 'number') {
-            for ($i = 1; $i < 53; $i++) {
+        } elseif ($type === self::TYPE_NUMERIC) {
+            for ($i = 1; $i < 14; $i++) {
+                $this->cards[] = new NumberCard($i);
+                $this->cards[] = new NumberCard($i);
+                $this->cards[] = new NumberCard($i);
                 $this->cards[] = new NumberCard($i);
             }
         }
@@ -38,8 +44,8 @@ class Package
         shuffle($this->cards);
     }
 
-    public function getCards(): array
+    public function splitIntoTwo(): array
     {
-        return $this->cards;
+        return array_chunk($this->cards, count($this->cards) / 2);
     }
 }

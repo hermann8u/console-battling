@@ -2,36 +2,23 @@
 
 namespace WarCardGame\Game;
 
-use WarCardGame\Game\Card\CardInterface;
+use WarCardGame\Game\Card\Card;
 
 class Player
 {
-    const SCORE_STEP = 1;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var CardInterface[]
-     */
+    /** @var Card[] */
     private $cards;
 
-    /**
-     * @var CardInterface
-     */
+    /** @var Card */
     private $currentCard;
 
-    /**
-     * @var int
-     */
-    private $score;
-
-    public function __construct()
+    public function __construct(string $name)
     {
+        $this->name = $name;
         $this->cards = [];
-        $this->score = 0;
     }
 
     public function getName(): string
@@ -39,52 +26,35 @@ class Player
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function addCards(Card ...$cards)
     {
-        $this->name = $name;
+        if (!$cards) {
+            return;
+        }
 
-        return $this;
+        shuffle($cards);
+        foreach ($cards as $card) {
+            $this->cards[] = $card;
+        }
     }
 
-    public function getCards(): array
+    public function getCardsCount(): int
     {
-        return $this->cards;
-    }
-
-    public function setCards(array $cards): self
-    {
-        $this->cards = $cards;
-
-        return $this;
-    }
-
-    public function addCard(CardInterface $card)
-    {
-        $this->cards[] = $card;
-    }
-
-    public function getCurrentCard(): ?CardInterface
-    {
-        return $this->currentCard;
-    }
-
-    public function getScore(): int
-    {
-        return $this->score;
-    }
-
-    public function incrementScore()
-    {
-        $this->score += self::SCORE_STEP;
-    }
-
-    public function drawCard(): ?CardInterface
-    {
-        return $this->currentCard = array_shift($this->cards);
+        return count($this->cards);
     }
 
     public function hasCards(): bool
     {
-        return (bool) count($this->cards);
+        return $this->getCardsCount() > 0;
+    }
+
+    public function getCurrentCard(): ?Card
+    {
+        return $this->currentCard;
+    }
+
+    public function drawCard(): ?Card
+    {
+        return $this->currentCard = array_shift($this->cards);
     }
 }

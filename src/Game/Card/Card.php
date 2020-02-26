@@ -2,7 +2,7 @@
 
 namespace WarCardGame\Game\Card;
 
-interface CardInterface
+interface Card
 {
     public function __toString(): string;
     public function getValue(): int;
