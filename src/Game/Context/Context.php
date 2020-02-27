@@ -11,5 +11,5 @@ interface Context
     public function launchRound(int $roundNumber): void;
     public function afterPlayersDraw(): void;
     public function finishRound(?Player $winner): void;
-    public function finishGame(?Player $winner, int $roundsCount): void;
+    public function finishGame(?Player $winner, array $rounds): void;
 }

@@ -59,12 +59,12 @@ class ConsoleContext implements Context
         $this->io->comment($winner ? $winner->getName().' gagne le round' : 'Bataille !');
     }
 
-    public function finishGame(?Player $winner, int $roundsCount): void
+    public function finishGame(?Player $winner, array $rounds): void
     {
-        $this->io->success(($winner ? $winner->getName().' gagne la partie !' : 'C\'est une égalité !').' La partie a durée '.$roundsCount.' rounds.');
+        $this->io->success(($winner ? $winner->getName().' gagne la partie !' : 'C\'est une égalité !').' La partie a durée '.count($rounds).' rounds.');
     }
 
-    private function formatCard(Card $card)
+    private function formatCard(Card $card): string
     {
         $result = (string) $card;
 
@@ -73,7 +73,7 @@ class ConsoleContext implements Context
                 $color = 'white';
             }
 
-            $result = '<fg='.$color.'>'.$result.'</>';
+            $result = sprintf('<fg=%s>%s</>', $color, $result);
         }
 
         return $result;
